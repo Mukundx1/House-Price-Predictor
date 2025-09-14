@@ -101,6 +101,8 @@ seaborn
 
 re (Regular Expressions)
 
+lightgbm
+
 🚀 How to Use
 Clone the repository to your local machine.
 
@@ -108,8 +110,42 @@ Ensure you have Python and the required libraries installed. You can install the
 
 ```bash
 
-pip install pandas numpy matplotlib seaborn jupyter
+pip install pandas numpy matplotlib seaborn jupyter lightgbm
 ```
 Place the house_prices.csv file inside a Data/ directory in the same folder as the notebook.
 
 Run the Jupyter Notebook 01_Data_Cleaning_and_EDA.ipynb to execute the data cleaning process and generate the output files.
+
+## Model Training
+### Model Selection
+After thorough data preparation, a LightGBM Regressor was chosen for this task. This model is highly efficient and particularly well-suited for this dataset because of its excellent built-in capabilities for handling categorical features. This allowed us to use all 81 unique locations without needing to group them, preserving the granular detail in the data.
+
+### Training Process
+The modeling workflow was executed as follows:
+
+- Data Preparation: The cleaned dataset was loaded, and all categorical columns (location, Transaction, Furnishing, etc.) were converted to the category data type, as recommended for LightGBM.
+
+- Data Splitting: The dataset was split into features (X) and the log-transformed target variable (y). A standard 80/20 split was used to create training and testing sets.
+
+- Model Training: An instance of lgb.LGBMRegressor was trained on the training data (X_train, y_train). The model training was straightforward, as LightGBM automatically handles the categorical features without requiring manual one-hot encoding.
+
+## Model Performance & Limitations
+The model's performance was evaluated on the test set after converting the log-transformed predictions back to their original price scale using np.expm1().
+
+- Key Metrics:
+    R-squared (R²): 0.80
+
+- Root Mean Squared Error (RMSE): ₹63,35,519.30
+
+## Analysis of Results
+An R² score of 0.80 indicates that the model successfully explains 80% of the variance in house prices, which is a strong result for a complex real estate market.
+
+However, the RMSE of approximately 63 Lakhs seemed high. A deeper analysis revealed that this was not a flaw in the model's overall logic but was caused by its performance on a few outlier properties.
+
+As shown in the analysis, the model predicts prices for typical properties (e.g., in the 30 Lakh to 1.6 Crore range) with high accuracy. The large errors that inflate the RMSE are concentrated on a handful of ultra-luxury properties valued at over 25 Crores.
+
+## Conclusion
+The model is robust and reliable for the vast majority of properties in the Jaipur market. Its primary limitation is predicting prices for the extreme high end of the market, likely due to the scarcity of such data points in the training set.
+
+## Exporting the Model
+The final trained LightGBM model was exported as LightGBM_model.pkl using joblib for future use in a web application or API.
