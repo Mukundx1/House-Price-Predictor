@@ -147,5 +147,60 @@ As shown in the analysis, the model predicts prices for typical properties (e.g.
 ## Conclusion
 The model is robust and reliable for the vast majority of properties in the Jaipur market. Its primary limitation is predicting prices for the extreme high end of the market, likely due to the scarcity of such data points in the training set.
 
+## 🚀 Interactive Web Application (Streamlit)
+To provide a user-friendly way to interact with the model, an interactive web application was built using Streamlit.
+
+Key Features:
+    - Real-time Predictions: Get instant house price estimates based on your inputs.
+
+    - User-Friendly Interface: A clean layout with a sidebar for inputting all necessary property features.
+
+    - Dynamic Dropdowns: Categorical inputs like Location, Furnishing, and Ownership are dynamically populated from the dataset, ensuring valid selections.
+
+    - Interactive Controls: Sliders and number inputs for features like Area, BHK, and Bathrooms.
+
+The app loads the trained LightGBM_model.pkl and provides an intuitive interface for anyone to get a price estimate without needing to run any code.
+
+## 🛠️ Libraries Used
+- pandas
+- numpy
+- matplotlib
+- seaborn
+- re (Regular Expressions)
+- lightgbm
+- streamlit
+- joblib
+
 ## Exporting the Model
 The final trained LightGBM model was exported as LightGBM_model.pkl using joblib for future use in a web application or API.
+
+## ⚙️ How to Use
+1. Data Cleaning and Model Training
+Clone the repository to your local machine.
+
+Place the house_prices.csv file inside a Data/ directory.
+
+Run the Jupyter Notebook 01_Data_Cleaning_and_EDA.ipynb to execute the data cleaning process and train the model. This will generate the necessary CleanedData.csv and LightGBM_model.pkl files.
+
+2. Running the Streamlit Web App
+Ensure you have Python and the required libraries installed.
+
+```Bash
+
+pip install pandas numpy lightgbm scikit-learn streamlit joblib
+```
+Make sure the following files are in your project directory:
+
+- app.py (the Streamlit script)
+
+- LightGBM_model.pkl
+
+- Data/CleanedData.csv
+
+Open your terminal, navigate to the project directory, and run the following command:
+
+```Bash
+
+streamlit run app.py
+```
+Your web browser will automatically open a new tab with the Jaipur House Price Predictor application running locally.
